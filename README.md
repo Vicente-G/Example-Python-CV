@@ -4,7 +4,7 @@
 [![deploy](https://github.com/Vicente-G/Example-Python-CV/actions/workflows/cd.yml/badge.svg?event=push)](https://github.com/Vicente-G/Example-Python-CV/actions/workflows/cd.yml)
 [![license](https://img.shields.io/badge/license-MIT-purple.svg)](https://github.com/Vicente-G/Database-Model/blob/main/LICENSE)
 
-This is an example of service written in `Python`, it provides a base from which make other services. The implementation uses `gunicorn`, `Flask`
+This is an example of service written in `Python`, it provides a base from which make other services related to image processing using `OpenCV`. The implementation uses `gunicorn`, `Flask`
 
 ## Installation
 
@@ -46,16 +46,32 @@ If everything is working as intended, the answer to that response should be a 20
 
 ## Requests
 
-As this is just an example, this service only has one extra route asides from the `status` one. This service provides the route `example`, with the following command:
+As this is just an example, this service only has one extra route asides from the `status` one. This service provides the route `process`, with the following command:
 
 ```sh
-curl localhost:8080/example
+curl -X POST localhost:8080/process \
+-d '{"image":"<your Base64 string encoding an image>"' \
+-H 'Content-Type: application/json'
 ```
 
-The output should be something with this shape:
+The output should be something with the following shape: (key changes to error if the processing fails)
 
 ```json
 {
-    "hello": "world"
+    "image": "<a Base64 string encoding the processed image>"
 }
+```
+
+Also, the following correspond to the equivalent action in axios:
+
+```js
+const { image, error } = await axios.post(
+    'localhost:8080/process',
+    { image: '<your Base64 string encoding an image>' },
+    {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+)
 ```
