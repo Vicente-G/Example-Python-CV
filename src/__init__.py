@@ -2,8 +2,8 @@ from argparse import ArgumentParser
 
 from flask import Flask
 
-from .config import PORT
-from .routes import router
+from src.config import PORT
+from src.routes import router
 
 parser = ArgumentParser()
 parser.add_argument("--debug", default=False, action="store_true")
