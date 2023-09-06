@@ -1,6 +1,6 @@
-from flask import Flask, Response
+from flask import Flask, Response, request
 
-from .example import response as example_response
+from .process import response as process_response
 
 
 def router(app: Flask) -> Flask:
@@ -8,8 +8,8 @@ def router(app: Flask) -> Flask:
     def status() -> Response:
         return Response(None, status=200)
 
-    @app.route("/example", methods=["GET"])
-    def example() -> Response:
-        return example_response()
+    @app.route("/process", methods=["POST"])
+    def process() -> Response:
+        return process_response(request)
 
     return app
